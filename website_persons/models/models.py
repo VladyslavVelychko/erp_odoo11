@@ -19,9 +19,12 @@ class Persons(models.Model):
     ])
     company_id = fields.Many2one('res.company', required=True)
 
-    @api.depends('first_name', 'last_name')
+    @api.onchange('first_name', 'last_name')
+    @api.model
     def _merge_first_last(self):
-        self.full_name = self.first_name + self.last_name
+        for record in self:
+            if record.first_name and record.last_name:
+                record.full_name = record.first_name + ' ' + record.last_name
 
     @api.onchange('date_of_birth')
     def _compute_age(self):
