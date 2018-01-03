@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 from odoo import http
 
-# class WebsitePersons(http.Controller):
-#     @http.route('/website_persons/website_persons/', auth='public')
-#     def index(self, **kw):
-#         return "Hello, world"
 
-#     @http.route('/website_persons/website_persons/objects/', auth='public')
-#     def list(self, **kw):
-#         return http.request.render('website_persons.listing', {
-#             'root': '/website_persons/website_persons',
-#             'objects': http.request.env['website_persons.website_persons'].search([]),
-#         })
+class WebsitePersons(http.Controller):
+    @http.route('/persons/all/', auth='public', website=True)
+    def index(self, **kwargs):
+        persons = http.request.env['website.persons']
+        return http.request.render('website_persons.index', {
+            'persons': persons.search([])[-5:]
+        })
 
-#     @http.route('/website_persons/website_persons/objects/<model("website_persons.website_persons"):obj>/', auth='public')
-#     def object(self, obj, **kw):
-#         return http.request.render('website_persons.object', {
-#             'object': obj
-#         })
+    @http.route('/page/add_person', type='http', auth='public', website=True, methods=['POST', 'GET'])
+    def create(self, *args, **kwargs):
+        vals = http.request.httprequest
+        person = http.request.env['website.persons']
+        return http.request.render('website_persons.create', {
+            'add_person': person.create(vals)
+        })
