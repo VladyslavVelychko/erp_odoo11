@@ -1,22 +1,47 @@
 <odoo>
     <data>
-        <!-- <template id="listing"> -->
-        <!--   <ul> -->
-        <!--     <li t-foreach="objects" t-as="object"> -->
-        <!--       <a t-attf-href="#{ root }/objects/#{ object.id }"> -->
-        <!--         <t t-esc="object.display_name"/> -->
-        <!--       </a> -->
-        <!--     </li> -->
-        <!--   </ul> -->
-        <!-- </template> -->
-        <!-- <template id="object"> -->
-        <!--   <h1><t t-esc="object.display_name"/></h1> -->
-        <!--   <dl> -->
-        <!--     <t t-foreach="object._fields" t-as="field"> -->
-        <!--       <dt><t t-esc="field"/></dt> -->
-        <!--       <dd><t t-esc="object[field]"/></dd> -->
-        <!--     </t> -->
-        <!--   </dl> -->
-        <!-- </template> -->
+        <template id="index">
+            <t t-call="website.layout">
+                <t t-set="title">All persons</t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <t t-foreach="persons" t-as="person">
+                            <div class="row" style="text-align:center;border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;border-top:1px solid #000;">
+                                <div class="col-md-6 mb32">
+                                    <div class="col-md-4">
+                                        <t t-esc="person.full_name"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <t t-esc="person.sex"/>
+                                        <t t-esc="person.age"/>
+                                        <t t-esc="person.company_id.name"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="create">
+            <t t-call="website.layout">
+                <t t-set="title">Add person</t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <t t-foreach="add_person" t-as="person">
+                            <t t-esc="person.first_name"/>
+                            <t t-esc="person.last_name"/>
+                            <t t-esc="person.full_name"/>
+                            <t t-esc="person.date_of_birth"/>
+                            <t t-esc="person.sex"/>
+                            <t t-esc="person.age"/>
+                            <t t-esc="person.company_id"/>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
     </data>
 </odoo>
